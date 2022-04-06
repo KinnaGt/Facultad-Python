@@ -1,13 +1,48 @@
-# 9. La idea es tratar de programar una de las partes principales del juego “Buscaminas”. La idea
-# es que dado una estructura que dice que celdas tienen minas y que celdas no las tienen, como
-# la siguiente:
+def crearListaCarac(l):
+    '''Crear lista de caracteres a partir de strings en una lista'''
+    for elem in range(len(l)):
+        l[elem] = list(l[elem])
 
-arr_minas = [
-'-*-*-',
-'--*--',
-'----*',
-'*----',
+
+def buscarMinas(l):
+    crearListaCarac(l)
+    for elem in range(len(l)):
+        for elem2 in range(len(l[elem])):
+            cont = 0
+            if elem2 != 0:
+                if l[elem][elem2-1] in '*':
+                    cont += 1
+            if elem2 < len(l[elem])-1:
+                if l[elem][elem2+1] in '*':
+                    cont += 1
+            if elem != 0:
+                if l[elem-1][elem2] in '*':
+                    cont += 1
+                if elem2 != 0:
+                    if l[elem-1][elem2-1] in '*':
+                        cont += 1
+                if elem2 < len(l[elem])-1:
+                    if l[elem-1][elem2+1] in '*':
+                        cont += 1
+            if elem < len(l)-1:
+                if l[elem+1][elem2] in '*':
+                    cont += 1
+                if elem2 < len(l[elem])-1:
+                    if l[elem+1][elem2+1] in '*':
+                        cont += 1
+                    if elem2 != 0:
+                        if l[elem+1][elem2-1] in '*':
+                            cont += 1
+            l[elem][elem2] = l[elem][elem2].replace('-', f'{cont}')
+    print(l)
+
+
+l = [
+    '-*-*-',
+    '--*--',
+    '----*',
+    '*----',
+    '---*-'
 ]
-nueva = arr_minas.copy()
-print(nueva)
 
+buscarMinas(l)
